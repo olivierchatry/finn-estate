@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+	<head>
+		<style>
+		svg {
+			font: 10px sans-serif;
+		}
+		
+		.y.axis path {
+			display: none;
+		}
+		
+		.y.axis line {
+			stroke: #fff;
+			stroke-opacity: .2;
+			shape-rendering: crispEdges;
+		}
+		
+		.y.axis .zero line {
+			stroke: #000;
+			stroke-opacity: 1;
+		}
+		
+		.title {
+			font: 300 78px Helvetica Neue;
+			fill: #666;
+		}
+				
+		.date {
+			fill: #fff;
+		}
+		
+		rect {
+			fill-opacity: .6;
+			fill: #e377c2;
+		}
+				
+		</style>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+	</head>
+	<body>
+			<script>
+					// Initialize Firebase
+					var config = {
+						apiKey: "AIzaSyDfAFLw3ZILnDX8oed1tjeCibXXRYgpCTE",
+						authDomain: "finn-realestate-price.firebaseapp.com",
+						databaseURL: "https://finn-realestate-price.firebaseio.com",
+						projectId: "finn-realestate-price",
+						storageBucket: "finn-realestate-price.appspot.com",
+						messagingSenderId: "440324168591"
+					};
+					firebase.initializeApp(config);
+					var margin = {top: 20, right: 40, bottom: 30, left: 20},
+												width = 960 - margin.left - margin.right,
+												height = 500 - margin.top - margin.bottom,
+												barWidth = Math.floor(width / 19) - 1;
+		
+					var x = d3.scaleLinear()
+							.range([barWidth / 2, width - barWidth / 2]);
+		
+					var y = d3.scaleLinear()
+							.range([height, 0]);
+		
+					var yAxis = d3.axisLeft()
+							.scale(y)							
+							.tickSize(-width)
+							.tickFormat(function(d) { return Math.round(d / 1e6) + "M"; });
+		
+					// An SVG element with a bottom-right origin.
+					var svg = d3.select("body").append("svg")
+							.attr("width", width + margin.left + margin.right)
+							.attr("height", height + margin.top + margin.bottom)
+						.append("g")
+							.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+					// A sliding container to hold the bars by birthyear.
+					var date = svg.append("g")
+							.attr("class", "date");
+		
+					// A label for the current year.
+					var title = svg.append("text")
+							.attr("class", "title")
+							.attr("dy", ".71em")
+							.text(2000);
+					
+				</script>
+		
+	</body>
+	
+</html>
