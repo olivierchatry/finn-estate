@@ -63,10 +63,11 @@ const parsePageCount = ($) => {
 }
 
 const prices = firebase.database().ref("prices")
-const dataset = firebase.database().ref("/datasets").push({
+const dataset = firebase.database().ref("datasets").push({
 	time:firebase.database.ServerValue.TIMESTAMP
 })
 const datasetPrices = {}
+const areaMultiPath = {}
 const queryResult = async (query, leaf, page) => {
 	page = page || 1
 	console.log(`finn query for *${leaf.name}* (id ${leaf.id}) page *${page}*`)
@@ -126,6 +127,7 @@ const queryResult = async (query, leaf, page) => {
 				dataset:dataset.key,
 				finnData:leaf.finnCodes
 			})
+			areaMultiPath[`areas/${leaf.dbId}/prices/${item.key}`] = true
 			datasetPrices[item.key] = true	
 		}
 	}
@@ -180,6 +182,9 @@ const main = async () => {
 	await treeToFirebase(locationTree)
 	await recurseQueryTree(locationTree)	
 	await dataset.child('prices').set(datasetPrices)
+	await firebase.database().ref().update(areaMultiPath)
+	firebase.app().delete()
+	process.exit(0)
 }
 
 main()
