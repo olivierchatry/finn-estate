@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-2">
+		{{em-tree model=model selected=current expand-depth=expandDepth in-multi-selection=true multi-selection=multi}}
+	</div>
+	<div class="col-10">
+		{{#unless multi.length }}
+			Please, select at least one area.
+		{{/unless}}
+		{{#each multi as |area|}}
+			<div class="card w-100">
+				<div class="card-header">
+					{{area.name}}
+				</div>
+				<div class="card-body">
+				{{time-series-chart
+						barData=area.pricesAsArray
+						lineData=area.pricesAsArray
+						barPadding=0
+						barGroupPadding=0.25
+						barLeftOffset=0
+						timeDelta="day"
+						selectedInterval="D"
+						yAxisFromZero=false
+						dynamicXAxis=true
+						hasXAxisTitle=false
+						hasYAxisTitle=false
+						xValueDisplayName="Time"
+						yValueDisplayName="Sq.Me.Price"
+						maxNumberOfMinorTicks=0
+						xAxisVertLabels=false
+					}}
+				</div>
+			</div>
+		{{/each}}
+	</div>
+</div>
