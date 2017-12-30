@@ -2,6 +2,7 @@
   "name": "frontend",
   "dependencies": {
     "d3": "~3.5.3",
-    "lodash": "~3.10.0"
+    "lodash": "~3.10.0",
+    "jstree": "^3.3.4"
   }
 }

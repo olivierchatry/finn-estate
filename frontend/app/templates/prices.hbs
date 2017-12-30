@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-2">
+		
 		{{em-tree model=model selected=current expand-depth=expandDepth in-multi-selection=true multi-selection=multi}}
 	</div>
 	<div class="col-10">
@@ -7,9 +8,10 @@
 			Please, select at least one area.
 		{{/unless}}
 		{{#each multi as |area|}}
+		
 			<div class="card w-100">
 				<div class="card-header">
-					{{area.name}}
+					<i class="fa fa-times" {{action "removeFromSelection" area}}></i> {{area.name}}
 				</div>
 				<div class="card-body">
 				{{time-series-chart
@@ -20,7 +22,7 @@
 						barLeftOffset=0
 						timeDelta="day"
 						selectedInterval="D"
-						yAxisFromZero=false
+						yAxisFromZero=true
 						dynamicXAxis=true
 						hasXAxisTitle=false
 						hasYAxisTitle=false
